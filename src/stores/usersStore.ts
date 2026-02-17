@@ -1,4 +1,3 @@
-// userStore.ts
 import { defineStore } from 'pinia'
 import { getUsers, getPosts } from '../services/api'
 import type { User } from '../types/User'
