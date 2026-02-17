@@ -1,35 +1,42 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { NModal, NCard, NDataTable } from 'naive-ui'
+
+import { NModal, NDataTable } from 'naive-ui'
 import { useUsers } from '../composables/useUser'
 
-const { selectedUser, posts } = useUsers()
-const showModal = ref(false)
+const {
+  selectedUser,
+  posts,
+  isModalOpen
+} = useUsers()
 
-watch(selectedUser, (newVal) => {
-  if (newVal) {
-    showModal.value = true
+const columns = [
+  {
+    title: 'Title',
+    key: 'title'
+  },
+  {
+    title: 'Body',
+    key: 'body'
   }
-})
+]
 </script>
 
 <template>
-  <n-modal v-model:show="showModal">
-    <n-card
-       style="width: 90vw; max-width: 900px; max-height: 80vh;"
-    content-style="overflow: auto;"
-      :title="selectedUser?.name + `'s Posts`"
-      closable
-      @close="showModal = false"
-    >
-      <n-data-table
-        :columns="[
-          { title: 'Title', key: 'title' },
-          { title: 'Body', key: 'body' }
-        ]"
-        :data="posts"
-        striped
-      />
-    </n-card>
+  <n-modal
+    v-model:show="isModalOpen"
+    preset="card"
+    style="width: 900px; max-width: 90vw;"
+    @close="isModalOpen = false"
+  >
+    <template>
+      {{ selectedUser?.name }}'s Posts
+    </template>
+
+    <n-data-table
+      :columns="columns"
+      :data="posts"
+      :pagination="{ pageSize: 5 }"
+      bordered
+    />
   </n-modal>
 </template>

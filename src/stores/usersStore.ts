@@ -9,7 +9,8 @@ export const useUsersStore = defineStore('users', {
     users: [] as User[],
     posts: [] as Post[],
     selectedUser: null as User | null,
-    searchQuery: ''
+    searchQuery: '',
+     isModalOpen: false
   }),
 
   getters: {
@@ -30,6 +31,7 @@ export const useUsersStore = defineStore('users', {
     async fetchPosts(user: User) {
       this.selectedUser = user
       this.posts = await getPosts(user.id)
+      this.isModalOpen = true
     },
 
     setSearch(query: string) {
