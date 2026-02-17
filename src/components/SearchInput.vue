@@ -6,6 +6,7 @@ const { searchQuery, setSearch } = useUsers()
 </script>
 
 <template>
+    <div class="search-wrapper">
   <n-input
     v-model:value="searchQuery"
     placeholder="Search by name"
@@ -13,6 +14,7 @@ const { searchQuery, setSearch } = useUsers()
     @update:value="setSearch"
     class="search-input"
   />
+  </div>
 </template>
 
 <style scoped src="../styles/SearchInput.css"></style>

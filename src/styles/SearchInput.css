@@ -1,4 +1,10 @@
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
 .search-input {
-  margin-bottom: 16px;
-  width: 300px;
+  width: 400px;
+  max-width: 90%;
 }

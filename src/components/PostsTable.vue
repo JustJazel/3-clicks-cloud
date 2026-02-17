@@ -4,13 +4,8 @@ import { NModal, NCard, NDataTable } from 'naive-ui'
 import { useUsers } from '../composables/useUser'
 
 const { selectedUser, posts } = useUsers()
-
 const showModal = ref(false)
 
-/* 
-  Whenever selectedUser changes,
-  automatically open modal
-*/
 watch(selectedUser, (newVal) => {
   if (newVal) {
     showModal.value = true
