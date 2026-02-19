@@ -9,16 +9,27 @@ export const useUsersStore = defineStore('users', {
     posts: [] as Post[],
     selectedUser: null as User | null,
     searchQuery: '',
-     isModalOpen: false
+    selectedCity: '',
+    isModalOpen: false
   }),
 
   getters: {
+    cities(state) {
+      return [...new Set(state.users.map(user => user.address.city))]
+    },
+
     filteredUsers(state) {
-      return state.users.filter(user =>
-        user.name
+      return state.users.filter(user => {
+        const matchesName = user.name
           .toLowerCase()
           .includes(state.searchQuery.toLowerCase())
-      )
+
+        const matchesCity = state.selectedCity
+          ? user.address.city.toLowerCase() === state.selectedCity.toLowerCase()
+          : true
+
+        return matchesName && matchesCity
+      })
     }
   },
 
@@ -33,8 +44,10 @@ export const useUsersStore = defineStore('users', {
       this.isModalOpen = true
     },
 
-    setSearch(query: string) {
-      this.searchQuery = query
+    closeModal() {
+      this.isModalOpen = false
+      this.selectedUser = null
+      this.posts = []
     }
   }
 })

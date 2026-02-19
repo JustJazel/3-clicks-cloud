@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { NDataTable } from 'naive-ui'
-import { useUsers } from '../composables/useUser'
+import { NDataTable, NInput, NSelect } from 'naive-ui'
+import { useUsersStore } from '../stores/usersStore'
 import type { User } from '../types/User'
 
-const { filteredUsers, fetchPosts } = useUsers()
+const store = useUsersStore()
 
 const columns = [
   { title: 'Name', key: 'name' },
   { title: 'Email', key: 'email' },
   {
     title: 'City',
-    key: 'address',
+    key: 'city',
     render(row: User) {
       return row.address.city
     }
@@ -28,21 +28,43 @@ function rowProps(row: User) {
   return {
     style: 'cursor: pointer;',
     onClick: async () => {
-      await fetchPosts(row)
+      await store.fetchPosts(row)
     }
   }
 }
 </script>
 
 <template>
-  <div class="table-container">
-    <n-data-table
-      :columns="columns"
-      :data="filteredUsers"
-      :row-props="rowProps"
-      striped
-      bordered
+    <n-select
+      v-model:value="store.selectedCity"
+      :options="store.cities.map(city => ({
+        label: city,
+        value: city
+      }))"
+      placeholder="Filter by city"
+      clearable
+      class="city-select"
     />
-  </div>
+
+
+  <n-data-table
+    :columns="columns"
+    :data="store.filteredUsers"
+    :row-props="rowProps"
+    striped
+    bordered
+  />
 </template>
-<style scoped src="../styles/UsersTable.css"></style>
+
+<style scoped>
+.filters {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.search-input,
+.city-select {
+  width: 250px;
+}
+</style>

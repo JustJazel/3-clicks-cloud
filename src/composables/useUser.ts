@@ -10,7 +10,8 @@ export function useUsers() {
     selectedUser,
     filteredUsers,
     searchQuery,
-    isModalOpen
+    isModalOpen,
+    selectedCity
   } = storeToRefs(store)
 
   return {
@@ -20,8 +21,8 @@ export function useUsers() {
     filteredUsers,
     searchQuery,
     isModalOpen,
+    selectedCity,
     fetchUsers: store.fetchUsers,
-    fetchPosts: store.fetchPosts,
-    setSearch: store.setSearch
+    fetchPosts: store.fetchPosts
   }
 }
